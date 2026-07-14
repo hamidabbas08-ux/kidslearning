@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/theme/app_theme.dart';
-import '../../../../core/audio/audio_manager.dart';
-import '../../../../core/storage/save_system.dart';
-import '../../../../core/routes/app_routes.dart';
-import '../widgets/bouncy_button.dart';
+import 'package:kids_learning/core/theme/app_theme.dart';
+import 'package:kids_learning/core/audio/audio_manager.dart';
+import 'package:kids_learning/core/storage/save_system.dart';
+import 'package:kids_learning/core/routes/app_routes.dart';
+import 'package:kids_learning/features/home/presentation/widgets/bouncy_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ],
-                ).animate().bounce(duration: 1.seconds),
+                ).animate().scale(duration: 1.seconds, curve: Curves.elasticOut), // باؤنس ایرر کو فکس کیا گیا
                 Padding(
                   padding: const EdgeInsets.only(bottom: 24.0),
                   child: Column(
