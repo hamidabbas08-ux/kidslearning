@@ -1,20 +1,23 @@
 pluginManagement {
     def flutterSdkPath = {
         def properties = new Properties()
-        def localPropertiesFile = new File(settingsDir, '../local.properties')
+        // یہاں ہم نے پاتھ کو درست لوکیشن (android/local.properties) پر سیٹ کر دیا ہے
+        def localPropertiesFile = new File(settingsDir, 'local.properties')
         if (localPropertiesFile.exists()) {
             localPropertiesFile.withReader('UTF-8') { reader ->
                 properties.load(reader)
             }
         }
-        return properties.getProperty('flutter.sdk')
+        def sdkPath = properties.getProperty('flutter.sdk')
+        assert sdkPath != null, "flutter.sdk not set in local.properties"
+        return sdkPath
     }()
 
     includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
 
     repositories {
         google()
-        mavenCentral() // فائر وال بلاک سے بچنے کے لئے اسے فورس کیا گیا ہے
+        mavenCentral()
         gradlePluginPortal()
     }
 }
