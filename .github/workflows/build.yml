@@ -1,0 +1,58 @@
+name: Flutter Cloud Build
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+
+    # کلاؤڈ پر کی اسٹور فائل کو دوبارہ ڈیکوڈ کر کے جنریٹ کرنے کا سیکیور اسٹیپ
+    - name: Decode Keystore File Safely
+      run: |
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+
+    - name: Install Project Dependencies
+      run: flutter pub get
+
+    - name: Build Fully Signed Production APK
+      env:
+        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEYSTORE_PATH: "upload-keystore.jks"
+      run: flutter build apk --release
+
+    - name: Build Play Store App Bundle (AAB)
+      env:
+        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEYSTORE_PATH: "upload-keystore.jks"
+      run: flutter build appbundle --release
+
+    - name: Upload Secure APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
+
+    - name: Upload Secure AAB Bundle
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-aab
+        path: build/app/outputs/bundle/release/app-release.aab
