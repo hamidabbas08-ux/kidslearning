@@ -1,21 +1,20 @@
-
 plugins {
     id "com.android.application"
-    id "org.jetbrains.kotlin.android"
+    id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
 }
 
 android {
     namespace "com.hamid.kidslearning"
     compileSdk flutter.compileSdkVersion
-
-    defaultConfig {
-        applicationId "com.hamid.kidslearning"
-        minSdk flutter.minSdkVersion
-        targetSdk flutter.targetSdkVersion
-        versionCode flutter.versionCode
-        versionName flutter.versionName
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -23,12 +22,24 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = '17'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId "com.hamid.kidslearning"
+        minSdk flutter.minSdkVersion
+        targetSdk flutter.targetSdkVersion
+        versionCode 1
+        versionName "1.0.0"
     }
 
     signingConfigs {
         release {
-            storeFile file(System.getenv("KEYSTORE_PATH") ?: "upload-keystore.jks")
+            storeFile file("upload-keystore.jks")
             storePassword System.getenv("STORE_PASSWORD") ?: "Abbas@007"
             keyAlias System.getenv("KEY_ALIAS") ?: "upload"
             keyPassword System.getenv("KEY_PASSWORD") ?: "Abbas@007"
@@ -38,11 +49,13 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 flutter {
-    source "../.."
+    source '../..'
 }
-

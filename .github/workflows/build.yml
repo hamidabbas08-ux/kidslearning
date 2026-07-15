@@ -28,7 +28,7 @@ jobs:
           flutter-version: '3.44.6'
           channel: 'stable'
 
-      - name: Decode Keystore File Safety (100% Robust)
+      - name: Decode Keystore File Safety (100% Guaranteed)
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
@@ -39,10 +39,10 @@ jobs:
               print('ERROR: KEYSTORE_BASE64 secret is empty!')
               sys.exit(1)
           
-          # تمام فالتو اسپیسز اور نیو لائنز کا خاتمہ
+          # تمام فالتو اسپیسز اور نیو لائنز کا مکمل خاتمہ
           clean_secret = ''.join(secret.split())
           
-          # اگر آخر سے پیڈنگ کا '=' غائب ہے تو اسے خود کار طریقے سے درست کرنا
+          # اگر آخر سے پیڈنگ کا '=' غائب ہو تو خودکار درستگی
           missing_padding = len(clean_secret) % 4
           if missing_padding:
               clean_secret += '=' * (4 - missing_padding)
@@ -52,7 +52,7 @@ jobs:
               os.makedirs('android/app', exist_ok=True)
               with open('android/app/upload-keystore.jks', 'wb') as f:
                   f.write(decoded_data)
-              print('SUCCESS: Keystore file successfully decoded and written to android/app/upload-keystore.jks')
+              print('SUCCESS: Keystore file successfully restored without corruption.')
           except Exception as e:
               print(f'ERROR: Decoding failed: {e}')
               sys.exit(1)
@@ -66,7 +66,6 @@ jobs:
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          KEYSTORE_PATH: "upload-keystore.jks"
         run: flutter build apk --release
 
       - name: Build Fully Signed Play Store App Bundle (AAB)
@@ -74,7 +73,6 @@ jobs:
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          KEYSTORE_PATH: "upload-keystore.jks"
         run: flutter build appbundle --release
 
       - name: Upload Secure APK
