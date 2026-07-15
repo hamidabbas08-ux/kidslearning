@@ -1,7 +1,6 @@
 pluginManagement {
     def flutterSdkPath = {
         def properties = new Properties()
-        // یہاں ہم نے پاتھ کو درست لوکیشن (android/local.properties) پر سیٹ کر دیا ہے
         def localPropertiesFile = new File(settingsDir, 'local.properties')
         if (localPropertiesFile.exists()) {
             localPropertiesFile.withReader('UTF-8') { reader ->
@@ -23,8 +22,9 @@ pluginManagement {
 }
 
 plugins {
-    id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
+    id "com.android.application" version "8.2.1" apply false
     id "org.jetbrains.kotlin.android" version "1.9.24" apply false
+    id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
 }
 
 include ":app"
