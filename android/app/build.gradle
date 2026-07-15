@@ -1,7 +1,7 @@
 plugins {
     id "com.android.application"
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
+    id "org.jetbrains.kotlin.android" // کوٹلن اب دوسرے نمبر پر آئے گا
+    id "dev.flutter.flutter-gradle-plugin" // فلوٹر اب تیسرے نمبر پر آئے گا
 }
 
 def localProperties = new Properties()
