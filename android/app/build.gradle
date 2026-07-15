@@ -1,20 +1,21 @@
+
 plugins {
     id "com.android.application"
-    id "org.jetbrains.kotlin.android" // کوٹلن اب دوسرے نمبر پر آئے گا
-    id "dev.flutter.flutter-gradle-plugin" // فلوٹر اب تیسرے نمبر پر آئے گا
-}
-
-def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
-        localProperties.load(reader)
-    }
+    id "org.jetbrains.kotlin.android"
+    id "dev.flutter.flutter-gradle-plugin"
 }
 
 android {
     namespace "com.hamid.kidslearning"
     compileSdk flutter.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.hamid.kidslearning"
+        minSdk flutter.minSdkVersion
+        targetSdk flutter.targetSdkVersion
+        versionCode flutter.versionCode
+        versionName flutter.versionName
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -22,19 +23,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '17'
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-
-    defaultConfig {
-        applicationId "com.hamid.kidslearning"
-        minSdk flutter.minSdkVersion
-        targetSdk flutter.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
+        jvmTarget = "17"
     }
 
     signingConfigs {
@@ -49,13 +38,11 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 flutter {
-    source '../..'
+    source "../.."
 }
+
