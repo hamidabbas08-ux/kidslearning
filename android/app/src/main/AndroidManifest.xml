@@ -27,7 +27,6 @@
             </intent-filter>
         </activity>
 
-        <!-- یہ اہم ترین ٹیگ فلوٹر کو بتاتا ہے کہ ہم نیا V2 سسٹم استعمال کر رہے ہیں -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

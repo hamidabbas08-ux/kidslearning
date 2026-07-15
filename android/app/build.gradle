@@ -14,7 +14,7 @@ if (localPropertiesFile.exists()) {
 
 android {
     namespace "com.hamid.kidslearning"
-    compileSdk 34
+    compileSdk flutter.compileSdkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -31,8 +31,8 @@ android {
 
     defaultConfig {
         applicationId "com.hamid.kidslearning"
-        minSdk 21
-        targetSdk 34
+        minSdk flutter.minSdkVersion
+        targetSdk flutter.targetSdkVersion
         versionCode 1
         versionName "1.0.0"
     }
