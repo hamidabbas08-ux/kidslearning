@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../features/home/presentation/pages/splash_screen.dart';
-import '../../features/home/presentation/pages/home_screen.dart';
-import '../../features/game/presentation/pages/category_selection_screen.dart';
-import '../../features/parent/presentation/pages/parent_mode_screen.dart';
-import '../../features/settings/presentation/pages/settings_screen.dart';
-import '../../features/onboarding/presentation/pages/onboarding_screen.dart';
-import '../../features/achievements/presentation/pages/achievements_screen.dart';
+import 'package:kids_learning/features/home/presentation/pages/splash_screen.dart';
+import 'package:kids_learning/features/home/presentation/pages/home_screen.dart';
+import 'package:kids_learning/features/game/presentation/pages/category_selection_screen.dart';
+import 'package:kids_learning/features/parent/presentation/pages/parent_mode_screen.dart';
+import 'package:kids_learning/features/settings/presentation/pages/settings_screen.dart';
+import 'package:kids_learning/features/onboarding/presentation/pages/onboarding_screen.dart';
+import 'package:kids_learning/features/achievements/presentation/pages/achievements_screen.dart';
 
 class AppRoutes {
   static const String splash = '/';
@@ -16,8 +16,8 @@ class AppRoutes {
   static const String settings = '/settings';
   static const String achievements = '/achievements';
 
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
+  static Route<dynamic> generateRoute(RouteSettings routeSettings) {
+    switch (routeSettings.name) {
       case splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case onboarding:
@@ -28,14 +28,14 @@ class AppRoutes {
         return _buildAnimatedRoute(const CategorySelectionScreen());
       case parentDashboard:
         return _buildAnimatedRoute(const ParentModeScreen());
-      case this.settings:
+      case settings:
         return _buildAnimatedRoute(const SettingsScreen());
       case achievements:
         return _buildAnimatedRoute(const AchievementsScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
-            body: Center(child: Text('No route defined for ${settings.name}')),
+            body: Center(child: Text('No route defined for ${routeSettings.name}')),
           ),
         );
     }
