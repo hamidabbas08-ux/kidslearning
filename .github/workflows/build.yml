@@ -23,7 +23,7 @@ jobs:
 
     - name: Decode Keystore File Safely
       run: |
-        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode --ignore-garbage > android/app/upload-keystore.jks
 
     - name: Install Project Dependencies
       run: flutter pub get
