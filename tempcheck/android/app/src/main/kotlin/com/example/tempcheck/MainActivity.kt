@@ -1,4 +1,4 @@
-package com.hamid.kidslearning
+package com.example.tempcheck
 
 import io.flutter.embedding.android.FlutterActivity
 
