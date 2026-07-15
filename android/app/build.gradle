@@ -1,7 +1,6 @@
 plugins {
     id "com.android.application"
-    id "dev.flutter.flutter-gradle-plugin" // یہ اب دوسرے نمبر پر آئے گا تاکہ لائبریریاں پہلے لوڈ ہوں
-    id "org.jetbrains.kotlin.android"       // یہ اب تیسرے نمبر پر جائے گا
+    id "dev.flutter.flutter-gradle-plugin"
 }
 
 def localProperties = new Properties()
@@ -19,14 +18,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = '17'
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
     }
 
     defaultConfig {
