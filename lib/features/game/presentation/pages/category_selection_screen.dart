@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'import 'dart:math';
+import 'dart:math';
 
-// ماسٹر پلان ڈیٹا ماڈل
+// ماسٹر پلان ڈیٹا ماڈل: تصویر اور نام کو ایک ساتھ باندھنے کے لیے
 class LearningItem {
   final String name;
   final String emoji;
@@ -17,7 +17,7 @@ class CategorySelectionScreen extends StatefulWidget {
 }
 
 class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
-  // دنیا بھر کا مکمل ڈیٹا سیٹ (ماسٹرا پلان کے عین مطابق)
+  // 🍎 دنیا بھر کا مکمل ڈیٹا سیٹ (ماسٹرا پلان کے عین مطابق)
   final Map<String, List<LearningItem>> globalMasterData = {
     'Alphabets': [
       LearningItem(name: 'A for Apple', emoji: '🍎'),
@@ -63,6 +63,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
       LearningItem(name: 'Pomegranate', emoji: '🥭'),
       LearningItem(name: 'Coconut', emoji: '🥥'),
       LearningItem(name: 'Lemon', emoji: '🍋'),
+      LearningItem(name: 'Melon', emoji: '🍈'),
     ],
     'Vegetables': [
       LearningItem(name: 'Tomato', emoji: '🍅'),
@@ -76,7 +77,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
       LearningItem(name: 'Pumpkin', emoji: '🎃'),
       LearningItem(name: 'Mushroom', emoji: '🍄'),
       LearningItem(name: 'Garlic', emoji: '🧄'),
-      LearningItem(name: 'Peanuts', emoji: '🥜'),
+      LearningItem(name: 'Chili', emoji: '🌶️'),
     ],
     'Relations': [
       LearningItem(name: 'Father', emoji: '👨'),
@@ -98,6 +99,8 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
       LearningItem(name: 'Rabbit', emoji: '🐇'),
       LearningItem(name: 'Bear', emoji: '🐻'),
       LearningItem(name: 'Fox', emoji: '🦊'),
+      LearningItem(name: 'Cow', emoji: '🐄'),
+      LearningItem(name: 'Sheep', emoji: '🐑'),
     ],
   };
 
@@ -334,6 +337,9 @@ class _MasterLearningScreenState extends State<MasterLearningScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.items.isEmpty) {
+      return const Scaffold(body: Center(child: Text('No Items Found')));
+    }
     final currentItem = widget.items[currentIndex];
     return Scaffold(
       appBar: AppBar(
@@ -342,6 +348,7 @@ class _MasterLearningScreenState extends State<MasterLearningScreen> {
         foregroundColor: Colors.white,
       ),
       body: Padding(
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
             LinearProgressIndicator(
@@ -395,7 +402,6 @@ class _MasterLearningScreenState extends State<MasterLearningScreen> {
             ),
           ],
         ),
-        padding: const EdgeInsets.all(24.0),
       ),
     );
   }
@@ -441,7 +447,7 @@ class _MasterQuizScreenState extends State<MasterQuizScreen> {
       feedbackText = "";
       currentQuestionItem = widget.items[random.nextInt(widget.items.length)];
       
-      // آپشنز تیار کرنا
+      // فوراً 4 الگ الگ آپشنز تیار کرنا
       Set<String> uniqueOptions = {currentQuestionItem.emoji};
       while (uniqueOptions.length < 4 && uniqueOptions.length < widget.items.length) {
         uniqueOptions.add(widget.items[random.nextInt(widget.items.length)].emoji);
@@ -461,9 +467,11 @@ class _MasterQuizScreenState extends State<MasterQuizScreen> {
         feedbackColor = Colors.green;
       });
       await flutterTts.speak("Excellent! You are a genius!");
-      Future.delayed(const Duration(milliseconds: 1500), _generateQuestion);
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        if (mounted) _generateQuestion();
+      });
     } else {
-      // 💪 حوصلہ افزائی کا پکا علاج
+      // 💪 پوزیٹو موٹیویشن کا پکا علاج
       setState(() {
         feedbackText = "You can do it! 💪";
         feedbackColor = Colors.orange;
@@ -474,6 +482,9 @@ class _MasterQuizScreenState extends State<MasterQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.items.isEmpty) {
+      return const Scaffold(body: Center(child: Text('No Quiz Items Available')));
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.categoryName} Quiz Game', style: const TextStyle(fontWeight: FontWeight.bold)),
