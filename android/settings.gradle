@@ -24,7 +24,7 @@ pluginManagement {
 plugins {
     id "com.android.application" version "8.6.0" apply false
     id "org.jetbrains.kotlin.android" version "1.9.24" apply false
-    id "dev.flutter.flutter-gradle-plugin" apply false // ورژن نمبر ہٹا دیا گیا ہے تاکہ لوکل لنک کام کرے
+    id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false // ورژن دوبارہ بحال کر دیا گیا ہے
 }
 
 include ":app"
