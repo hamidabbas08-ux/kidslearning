@@ -1,7 +1,7 @@
 plugins {
     id "com.android.application"
-    id "org.jetbrains.kotlin.android"
-    id "dev.flutter.flutter-gradle-plugin"
+    id "dev.flutter.flutter-gradle-plugin" // یہ اب دوسرے نمبر پر آئے گا تاکہ لائبریریاں پہلے لوڈ ہوں
+    id "org.jetbrains.kotlin.android"       // یہ اب تیسرے نمبر پر جائے گا
 }
 
 def localProperties = new Properties()
